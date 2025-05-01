@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.promoter.mapper.PerformanceStatisticsByPromoterMapper">
+    
+    <resultMap type="PerformanceStatisticsByPromoter" id="PerformanceStatisticsByPromoterResult">
+        <result property="performanceId"    column="performance_id"    />
+        <result property="promoterAccountId"    column="promoter_account_id"    />
+        <result property="departmentId"    column="department_id"    />
+        <result property="leadQuantity"    column="lead_quantity"    />
+        <result property="duplicateOrderQuantity"    column="duplicate_order_quantity"    />
+        <result property="duplicateOrderRate"    column="duplicate_order_rate"    />
+        <result property="additionQuantity"    column="addition_quantity"    />
+        <result property="additionRate"    column="addition_rate"    />
+        <result property="transactionQuantity"    column="transaction_quantity"    />
+        <result property="transactionRate"    column="transaction_rate"    />
+        <result property="transactionAmount"    column="transaction_amount"    />
+        <result property="rebateAmount"    column="rebate_amount"    />
+        <result property="statisticalTimePeriod"    column="statistical_time_period"    />
+    </resultMap>
+
+    <sql id="selectPerformanceStatisticsByPromoterVo">
+        select performance_id, promoter_account_id, department_id, lead_quantity, duplicate_order_quantity, duplicate_order_rate, addition_quantity, addition_rate, transaction_quantity, transaction_rate, transaction_amount, rebate_amount, statistical_time_period from performance_statistics_by_promoter
+    </sql>
+
+    <select id="selectPerformanceStatisticsByPromoterList" parameterType="PerformanceStatisticsByPromoter" resultMap="PerformanceStatisticsByPromoterResult">
+        <include refid="selectPerformanceStatisticsByPromoterVo"/>
+        <where>  
+            <if test="promoterAccountId != null "> and promoter_account_id = #{promoterAccountId}</if>
+            <if test="departmentId != null "> and department_id = #{departmentId}</if>
+            <if test="leadQuantity != null "> and lead_quantity = #{leadQuantity}</if>
+            <if test="duplicateOrderQuantity != null "> and duplicate_order_quantity = #{duplicateOrderQuantity}</if>
+            <if test="duplicateOrderRate != null "> and duplicate_order_rate = #{duplicateOrderRate}</if>
+            <if test="additionQuantity != null "> and addition_quantity = #{additionQuantity}</if>
+            <if test="additionRate != null "> and addition_rate = #{additionRate}</if>
+            <if test="transactionQuantity != null "> and transaction_quantity = #{transactionQuantity}</if>
+            <if test="transactionRate != null "> and transaction_rate = #{transactionRate}</if>
+            <if test="transactionAmount != null "> and transaction_amount = #{transactionAmount}</if>
+            <if test="rebateAmount != null "> and rebate_amount = #{rebateAmount}</if>
+            <if test="statisticalTimePeriod != null  and statisticalTimePeriod != ''"> and statistical_time_period = #{statisticalTimePeriod}</if>
+        </where>
+    </select>
+    
+    <select id="selectPerformanceStatisticsByPromoterByPerformanceId" parameterType="Long" resultMap="PerformanceStatisticsByPromoterResult">
+        <include refid="selectPerformanceStatisticsByPromoterVo"/>
+        where performance_id = #{performanceId}
+    </select>
+
+    <insert id="insertPerformanceStatisticsByPromoter" parameterType="PerformanceStatisticsByPromoter" useGeneratedKeys="true" keyProperty="performanceId">
+        insert into performance_statistics_by_promoter
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="promoterAccountId != null">promoter_account_id,</if>
+            <if test="departmentId != null">department_id,</if>
+            <if test="leadQuantity != null">lead_quantity,</if>
+            <if test="duplicateOrderQuantity != null">duplicate_order_quantity,</if>
+            <if test="duplicateOrderRate != null">duplicate_order_rate,</if>
+            <if test="additionQuantity != null">addition_quantity,</if>
+            <if test="additionRate != null">addition_rate,</if>
+            <if test="transactionQuantity != null">transaction_quantity,</if>
+            <if test="transactionRate != null">transaction_rate,</if>
+            <if test="transactionAmount != null">transaction_amount,</if>
+            <if test="rebateAmount != null">rebate_amount,</if>
+            <if test="statisticalTimePeriod != null">statistical_time_period,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="promoterAccountId != null">#{promoterAccountId},</if>
+            <if test="departmentId != null">#{departmentId},</if>
+            <if test="leadQuantity != null">#{leadQuantity},</if>
+            <if test="duplicateOrderQuantity != null">#{duplicateOrderQuantity},</if>
+            <if test="duplicateOrderRate != null">#{duplicateOrderRate},</if>
+            <if test="additionQuantity != null">#{additionQuantity},</if>
+            <if test="additionRate != null">#{additionRate},</if>
+            <if test="transactionQuantity != null">#{transactionQuantity},</if>
+            <if test="transactionRate != null">#{transactionRate},</if>
+            <if test="transactionAmount != null">#{transactionAmount},</if>
+            <if test="rebateAmount != null">#{rebateAmount},</if>
+            <if test="statisticalTimePeriod != null">#{statisticalTimePeriod},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePerformanceStatisticsByPromoter" parameterType="PerformanceStatisticsByPromoter">
+        update performance_statistics_by_promoter
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="promoterAccountId != null">promoter_account_id = #{promoterAccountId},</if>
+            <if test="departmentId != null">department_id = #{departmentId},</if>
+            <if test="leadQuantity != null">lead_quantity = #{leadQuantity},</if>
+            <if test="duplicateOrderQuantity != null">duplicate_order_quantity = #{duplicateOrderQuantity},</if>
+            <if test="duplicateOrderRate != null">duplicate_order_rate = #{duplicateOrderRate},</if>
+            <if test="additionQuantity != null">addition_quantity = #{additionQuantity},</if>
+            <if test="additionRate != null">addition_rate = #{additionRate},</if>
+            <if test="transactionQuantity != null">transaction_quantity = #{transactionQuantity},</if>
+            <if test="transactionRate != null">transaction_rate = #{transactionRate},</if>
+            <if test="transactionAmount != null">transaction_amount = #{transactionAmount},</if>
+            <if test="rebateAmount != null">rebate_amount = #{rebateAmount},</if>
+            <if test="statisticalTimePeriod != null">statistical_time_period = #{statisticalTimePeriod},</if>
+        </trim>
+        where performance_id = #{performanceId}
+    </update>
+
+    <delete id="deletePerformanceStatisticsByPromoterByPerformanceId" parameterType="Long">
+        delete from performance_statistics_by_promoter where performance_id = #{performanceId}
+    </delete>
+
+    <delete id="deletePerformanceStatisticsByPromoterByPerformanceIds" parameterType="String">
+        delete from performance_statistics_by_promoter where performance_id in 
+        <foreach item="performanceId" collection="array" open="(" separator="," close=")">
+            #{performanceId}
+        </foreach>
+    </delete>
+</mapper>

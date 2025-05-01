@@ -148,6 +148,34 @@ export const dynamicRoutes = [
       }
     ]
   },
+  // {
+  //   path: '/promotion/promoteManagement',
+  //   component: Layout,
+  //   hidden: true,
+  //   permissions: ['promotion:promoteManagement:list'],
+  //   children: [
+  //     {
+  //       path: 'index/:jobId(\\d+)',
+  //       component: () => import('@/views/promotion/promoteManagement/index'),
+  //       name: 'JobLog',
+  //       meta: { title: '调度日志', activeMenu: '/promotion/promoteManagement' }
+  //     }
+  //   ]
+  // },
+  {
+    path: '/customer/customerManagement',
+    component: Layout,
+    hidden: true,
+    permissions: ['customer:customerManagement:list'],
+    children: [
+      {
+        path: 'index/:jobId(\\\\d+)',
+        component: () => import('@/views/customer/customerManagement/index'),
+        name: 'ImportTable',
+        meta: { title: '客户管理', activeMenu: '/customer/customerManagement' }
+      }
+    ]
+  },
   {
     path: '/tool/gen-edit',
     component: Layout,

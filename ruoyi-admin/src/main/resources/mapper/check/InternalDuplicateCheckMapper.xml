@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.check.mapper.InternalDuplicateCheckMapper">
+    
+    <resultMap type="InternalDuplicateCheck" id="InternalDuplicateCheckResult">
+        <result property="checkId"    column="check_id"    />
+        <result property="checkTime"    column="check_time"    />
+        <result property="customerId"    column="customer_id"    />
+    </resultMap>
+
+    <sql id="selectInternalDuplicateCheckVo">
+        select check_id, check_time, customer_id from internal_duplicate_check
+    </sql>
+
+    <select id="selectInternalDuplicateCheckList" parameterType="InternalDuplicateCheck" resultMap="InternalDuplicateCheckResult">
+        <include refid="selectInternalDuplicateCheckVo"/>
+        <where>  
+            <if test="checkId != null "> and check_id = #{checkId}</if>
+            <if test="checkTime != null "> and check_time = #{checkTime}</if>
+            <if test="customerId != null "> and customer_id = #{customerId}</if>
+        </where>
+    </select>
+    
+    <select id="selectInternalDuplicateCheckByCheckId" parameterType="Long" resultMap="InternalDuplicateCheckResult">
+        <include refid="selectInternalDuplicateCheckVo"/>
+        where check_id = #{checkId}
+    </select>
+
+    <insert id="insertInternalDuplicateCheck" parameterType="InternalDuplicateCheck" useGeneratedKeys="true" keyProperty="checkId">
+        insert into internal_duplicate_check
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+
+            <if test="checkTime != null">check_time,</if>
+            <if test="customerId != null">customer_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+            <if test="checkTime != null">#{checkTime},</if>
+            <if test="customerId != null">#{customerId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateInternalDuplicateCheck" parameterType="InternalDuplicateCheck">
+        update internal_duplicate_check
+        <trim prefix="SET" suffixOverrides=",">
+
+            <if test="checkTime != null">check_time = #{checkTime},</if>
+            <if test="customerId != null">customer_id = #{customerId},</if>
+        </trim>
+        where check_id = #{checkId}
+    </update>
+
+    <delete id="deleteInternalDuplicateCheckByCheckId" parameterType="Long">
+        delete from internal_duplicate_check where check_id = #{checkId}
+    </delete>
+
+    <delete id="deleteInternalDuplicateCheckByCheckIds" parameterType="String">
+        delete from internal_duplicate_check where check_id in 
+        <foreach item="checkId" collection="array" open="(" separator="," close=")">
+            #{checkId}
+        </foreach>
+    </delete>
+
+    <resultMap id="InternalDuplicateCheckWithCustomerResult" type="InternalDuplicateCheck">
+        <id property="checkId" column="check_id" />
+        <result property="customerId" column="customer_id" />
+        <result property="checkTime" column="check_time" />
+        <!-- 关联客户对象 -->
+        <association property="customer" javaType="CustomerManagement">
+            <id property="customerId" column="customer_id" />
+            <result property="customerName" column="customer_name" />
+            <result property="phoneNumber" column="phone_number" />
+            <result property="wechatId" column="wechat_id" />
+            <result property="xiaohongshuId" column="xiaohongshu_id" />
+            <result property="douyinId" column="douyin_id" />
+            <result property="type" column="type" />
+            <result property="promotionAccountId" column="promotion_account_id" />
+            <result property="customerServiceAccountId" column="customer_service_account_id" />
+            <result property="salespersonAccountId" column="salesperson_account_id" />
+            <result property="dispatchOrganization" column="dispatch_organization" />
+            <result property="lastDispatchTime" column="last_dispatch_time" />
+            <result property="location" column="location" />
+            <result property="consultingProject" column="consulting_project" />
+            <result property="consultingDetails" column="consulting_details" />
+            <result property="customerIntention" column="customer_intention" />
+            <result property="recorderAccountId" column="recorder_account_id" />
+            <result property="recordTime" column="record_time" />
+            <result property="channelSource" column="channel_source" />
+            <result property="boostStatus" column="boost_status" />
+            <result property="serviceStatus" column="service_status" />
+            <result property="saleStatus" column="sale_status" />
+        </association>
+    </resultMap>
+
+    <select id="selectInternalDuplicateCheckListWithCustomer" parameterType="InternalDuplicateCheck" resultMap="InternalDuplicateCheckWithCustomerResult">
+        select i.check_id,i.check_time, c.*
+        from internal_duplicate_check i
+        left join customer_management c on i.customer_id = c.customer_id
+        <where>
+
+        </where>
+    </select>
+
+    <select id="selectInternalDuplicateCheckWithCustomerByCheckId" parameterType="Long" resultMap="InternalDuplicateCheckWithCustomerResult">
+        select i.*, c.*
+        from internal_duplicate_check i
+        left join customer_management c on i.customer_id = c.customer_id
+        where i.check_id = #{checkId}
+    </select>
+</mapper>

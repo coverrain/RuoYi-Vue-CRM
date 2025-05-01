@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.customer.mapper.CustomerManagementMapper">
+    
+    <resultMap type="CustomerManagement" id="CustomerManagementResult">
+        <result property="customerId"    column="customer_id"    />
+        <result property="customerName"    column="customer_name"    />
+        <result property="phoneNumber"    column="phone_number"    />
+        <result property="wechatId"    column="wechat_id"    />
+        <result property="xiaohongshuId"    column="xiaohongshu_id"    />
+        <result property="douyinId"    column="douyin_id"    />
+        <result property="type"    column="type"    />
+        <result property="promotionAccountId"    column="promotion_account_id"    />
+        <result property="customerServiceAccountId"    column="customer_service_account_id"    />
+        <result property="salespersonAccountId"    column="salesperson_account_id"    />
+        <result property="dispatchOrganization"    column="dispatch_organization"    />
+        <result property="lastDispatchTime"    column="last_dispatch_time"    />
+        <result property="location"    column="location"    />
+        <result property="consultingProject"    column="consulting_project"    />
+        <result property="consultingDetails"    column="consulting_details"    />
+        <result property="customerIntention"    column="customer_intention"    />
+        <result property="recorderAccountId"    column="recorder_account_id"    />
+        <result property="recordTime"    column="record_time"    />
+        <result property="channelSource"    column="channel_source"    />
+        <result property="boostStatus"    column="boost_status"    />
+        <result property="serviceStatus"    column="service_status"    />
+        <result property="saleStatus"    column="sale_status"    />
+    </resultMap>
+
+    <sql id="selectCustomerManagementVo">
+        select customer_id, customer_name, phone_number, wechat_id, xiaohongshu_id, douyin_id, type, promotion_account_id, customer_service_account_id, salesperson_account_id, dispatch_organization, last_dispatch_time, location, consulting_project, consulting_details, customer_intention, recorder_account_id, record_time, channel_source, boost_status, service_status, sale_status from customer_management
+    </sql>
+
+    <select id="selectCustomerManagementList" parameterType="CustomerManagement" resultMap="CustomerManagementResult">
+        <include refid="selectCustomerManagementVo"/>
+        <where>  
+            <if test="customerName != null  and customerName != ''"> and customer_name like concat('%', #{customerName}, '%')</if>
+            <if test="phoneNumber != null  and phoneNumber != ''"> and phone_number = #{phoneNumber}</if>
+            <if test="wechatId != null  and wechatId != ''"> and wechat_id = #{wechatId}</if>
+            <if test="xiaohongshuId != null  and xiaohongshuId != ''"> and xiaohongshu_id = #{xiaohongshuId}</if>
+            <if test="douyinId != null  and douyinId != ''"> and douyin_id = #{douyinId}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="promotionAccountId != null "> and promotion_account_id = #{promotionAccountId}</if>
+            <if test="customerServiceAccountId != null "> and customer_service_account_id = #{customerServiceAccountId}</if>
+            <if test="salespersonAccountId != null "> and salesperson_account_id = #{salespersonAccountId}</if>
+            <if test="dispatchOrganization != null  and dispatchOrganization != ''"> and dispatch_organization = #{dispatchOrganization}</if>
+            <if test="lastDispatchTime != null "> and last_dispatch_time = #{lastDispatchTime}</if>
+            <if test="location != null  and location != ''"> and location = #{location}</if>
+            <if test="consultingProject != null  and consultingProject != ''"> and consulting_project = #{consultingProject}</if>
+            <if test="consultingDetails != null  and consultingDetails != ''"> and consulting_details = #{consultingDetails}</if>
+            <if test="customerIntention != null  and customerIntention != ''"> and customer_intention = #{customerIntention}</if>
+            <if test="recorderAccountId != null "> and recorder_account_id = #{recorderAccountId}</if>
+            <if test="recordTime != null "> and record_time = #{recordTime}</if>
+            <if test="channelSource != null  and channelSource != ''"> and channel_source = #{channelSource}</if>
+            <if test="boostStatus != null  and boostStatus != ''"> and boost_status = #{boostStatus}</if>
+            <if test="serviceStatus != null  and serviceStatus != ''"> and service_status = #{serviceStatus}</if>
+            <if test="saleStatus != null  and saleStatus != ''"> and sale_status = #{saleStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectCustomerManagementByCustomerId" parameterType="Long" resultMap="CustomerManagementResult">
+        <include refid="selectCustomerManagementVo"/>
+        where customer_id = #{customerId}
+    </select>
+
+    <insert id="insertCustomerManagement" parameterType="CustomerManagement" useGeneratedKeys="true" keyProperty="customerId">
+        insert into customer_management
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="customerName != null and customerName != ''">customer_name,</if>
+            <if test="phoneNumber != null">phone_number,</if>
+            <if test="wechatId != null">wechat_id,</if>
+            <if test="xiaohongshuId != null">xiaohongshu_id,</if>
+            <if test="douyinId != null">douyin_id,</if>
+            <if test="type != null">type,</if>
+            <if test="promotionAccountId != null">promotion_account_id,</if>
+            <if test="customerServiceAccountId != null">customer_service_account_id,</if>
+            <if test="salespersonAccountId != null">salesperson_account_id,</if>
+            <if test="dispatchOrganization != null">dispatch_organization,</if>
+            <if test="lastDispatchTime != null">last_dispatch_time,</if>
+            <if test="location != null">location,</if>
+            <if test="consultingProject != null">consulting_project,</if>
+            <if test="consultingDetails != null">consulting_details,</if>
+            <if test="customerIntention != null">customer_intention,</if>
+            <if test="recorderAccountId != null">recorder_account_id,</if>
+            <if test="recordTime != null">record_time,</if>
+            <if test="channelSource != null">channel_source,</if>
+            <if test="boostStatus != null">boost_status,</if>
+            <if test="serviceStatus != null">service_status,</if>
+            <if test="saleStatus != null">sale_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="customerName != null and customerName != ''">#{customerName},</if>
+            <if test="phoneNumber != null">#{phoneNumber},</if>
+            <if test="wechatId != null">#{wechatId},</if>
+            <if test="xiaohongshuId != null">#{xiaohongshuId},</if>
+            <if test="douyinId != null">#{douyinId},</if>
+            <if test="type != null">#{type},</if>
+            <if test="promotionAccountId != null">#{promotionAccountId},</if>
+            <if test="customerServiceAccountId != null">#{customerServiceAccountId},</if>
+            <if test="salespersonAccountId != null">#{salespersonAccountId},</if>
+            <if test="dispatchOrganization != null">#{dispatchOrganization},</if>
+            <if test="lastDispatchTime != null">#{lastDispatchTime},</if>
+            <if test="location != null">#{location},</if>
+            <if test="consultingProject != null">#{consultingProject},</if>
+            <if test="consultingDetails != null">#{consultingDetails},</if>
+            <if test="customerIntention != null">#{customerIntention},</if>
+            <if test="recorderAccountId != null">#{recorderAccountId},</if>
+            <if test="recordTime != null">#{recordTime},</if>
+            <if test="channelSource != null">#{channelSource},</if>
+            <if test="boostStatus != null">#{boostStatus},</if>
+            <if test="serviceStatus != null">#{serviceStatus},</if>
+            <if test="saleStatus != null">#{saleStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCustomerManagement" parameterType="CustomerManagement">
+        update customer_management
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="customerName != null and customerName != ''">customer_name = #{customerName},</if>
+            <if test="phoneNumber != null">phone_number = #{phoneNumber},</if>
+            <if test="wechatId != null">wechat_id = #{wechatId},</if>
+            <if test="xiaohongshuId != null">xiaohongshu_id = #{xiaohongshuId},</if>
+            <if test="douyinId != null">douyin_id = #{douyinId},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="promotionAccountId != null">promotion_account_id = #{promotionAccountId},</if>
+            <if test="customerServiceAccountId != null">customer_service_account_id = #{customerServiceAccountId},</if>
+            <if test="salespersonAccountId != null">salesperson_account_id = #{salespersonAccountId},</if>
+            <if test="dispatchOrganization != null">dispatch_organization = #{dispatchOrganization},</if>
+            <if test="lastDispatchTime != null">last_dispatch_time = #{lastDispatchTime},</if>
+            <if test="location != null">location = #{location},</if>
+            <if test="consultingProject != null">consulting_project = #{consultingProject},</if>
+            <if test="consultingDetails != null">consulting_details = #{consultingDetails},</if>
+            <if test="customerIntention != null">customer_intention = #{customerIntention},</if>
+            <if test="recorderAccountId != null">recorder_account_id = #{recorderAccountId},</if>
+            <if test="recordTime != null">record_time = #{recordTime},</if>
+            <if test="channelSource != null">channel_source = #{channelSource},</if>
+            <if test="boostStatus != null">boost_status = #{boostStatus},</if>
+            <if test="serviceStatus != null">service_status = #{serviceStatus},</if>
+            <if test="saleStatus != null">sale_status = #{saleStatus},</if>
+        </trim>
+        where customer_id = #{customerId}
+    </update>
+
+    <delete id="deleteCustomerManagementByCustomerId" parameterType="Long">
+        delete from customer_management where customer_id = #{customerId}
+    </delete>
+
+    <delete id="deleteCustomerManagementByCustomerIds" parameterType="String">
+        delete from customer_management where customer_id in 
+        <foreach item="customerId" collection="array" open="(" separator="," close=")">
+            #{customerId}
+        </foreach>
+    </delete>
+</mapper>

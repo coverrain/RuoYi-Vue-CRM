@@ -41,6 +41,9 @@
     <dependencyManagement>
         <dependencies>
 
+
+
+
             <!-- 覆盖SpringFramework的依赖配置-->
             <dependency>
                 <groupId>org.springframework</groupId>
@@ -228,6 +231,7 @@
         <module>ruoyi-quartz</module>
         <module>ruoyi-generator</module>
         <module>ruoyi-common</module>
+
     </modules>
     <packaging>pom</packaging>
 

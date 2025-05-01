@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.statistics.mapper.TransactionStatisticsMapper">
+    
+    <resultMap type="TransactionStatistics" id="TransactionStatisticsResult">
+        <result property="statisticsId"    column="statistics_id"    />
+        <result property="name"    column="name"    />
+        <result property="phoneNumber"    column="phone_number"    />
+        <result property="xiaohongshuId"    column="xiaohongshu_id"    />
+        <result property="wechat"    column="wechat"    />
+        <result property="orderEntryTime"    column="order_entry_time"    />
+        <result property="transactionStatus"    column="transaction_status"    />
+        <result property="transactionDate"    column="transaction_date"    />
+        <result property="transactionOrganization"    column="transaction_organization"    />
+        <result property="transactionProject"    column="transaction_project"    />
+        <result property="transactionAmount"    column="transaction_amount"    />
+        <result property="rebateRatio"    column="rebate_ratio"    />
+        <result property="rebateAmount"    column="rebate_amount"    />
+        <result property="balance"    column="balance"    />
+        <result property="paidAmount"    column="paid_amount"    />
+        <result property="toBePaidAmount"    column="to_be_paid_amount"    />
+        <result property="type"    column="type"    />
+        <result property="customerServiceAccountId"    column="customer_service_account_id"    />
+        <result property="channelSource"    column="channel_source"    />
+        <result property="promotionAccountId"    column="promotion_account_id"    />
+        <result property="salespersonAccountId"    column="salesperson_account_id"    />
+        <result property="recorderAccountId"    column="recorder_account_id"    />
+        <result property="customerId"    column="customer_id"    />
+    </resultMap>
+
+    <sql id="selectTransactionStatisticsVo">
+        select statistics_id, name, phone_number, xiaohongshu_id, wechat, order_entry_time, transaction_status, transaction_date, transaction_organization, transaction_project, transaction_amount, rebate_ratio, rebate_amount, balance, paid_amount, to_be_paid_amount, type, customer_service_account_id, channel_source, promotion_account_id, salesperson_account_id, recorder_account_id, customer_id from transaction_statistics
+    </sql>
+
+    <select id="selectTransactionStatisticsList" parameterType="TransactionStatistics" resultMap="TransactionStatisticsResult">
+        <include refid="selectTransactionStatisticsVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="phoneNumber != null  and phoneNumber != ''"> and phone_number = #{phoneNumber}</if>
+            <if test="xiaohongshuId != null  and xiaohongshuId != ''"> and xiaohongshu_id = #{xiaohongshuId}</if>
+            <if test="wechat != null  and wechat != ''"> and wechat = #{wechat}</if>
+            <if test="orderEntryTime != null "> and order_entry_time = #{orderEntryTime}</if>
+            <if test="transactionStatus != null  and transactionStatus != ''"> and transaction_status = #{transactionStatus}</if>
+            <if test="transactionDate != null "> and transaction_date = #{transactionDate}</if>
+            <if test="transactionOrganization != null  and transactionOrganization != ''"> and transaction_organization = #{transactionOrganization}</if>
+            <if test="transactionProject != null  and transactionProject != ''"> and transaction_project = #{transactionProject}</if>
+            <if test="transactionAmount != null "> and transaction_amount = #{transactionAmount}</if>
+            <if test="rebateRatio != null "> and rebate_ratio = #{rebateRatio}</if>
+            <if test="rebateAmount != null "> and rebate_amount = #{rebateAmount}</if>
+            <if test="balance != null "> and balance = #{balance}</if>
+            <if test="paidAmount != null "> and paid_amount = #{paidAmount}</if>
+            <if test="toBePaidAmount != null "> and to_be_paid_amount = #{toBePaidAmount}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="customerServiceAccountId != null "> and customer_service_account_id = #{customerServiceAccountId}</if>
+            <if test="channelSource != null  and channelSource != ''"> and channel_source = #{channelSource}</if>
+            <if test="promotionAccountId != null "> and promotion_account_id = #{promotionAccountId}</if>
+            <if test="salespersonAccountId != null "> and salesperson_account_id = #{salespersonAccountId}</if>
+            <if test="recorderAccountId != null "> and recorder_account_id = #{recorderAccountId}</if>
+            <if test="customerId != null "> and customer_id = #{customerId}</if>
+        </where>
+    </select>
+    
+    <select id="selectTransactionStatisticsByStatisticsId" parameterType="Long" resultMap="TransactionStatisticsResult">
+        <include refid="selectTransactionStatisticsVo"/>
+        where statistics_id = #{statisticsId}
+    </select>
+
+    <insert id="insertTransactionStatistics" parameterType="TransactionStatistics" useGeneratedKeys="true" keyProperty="statisticsId">
+        insert into transaction_statistics
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="phoneNumber != null">phone_number,</if>
+            <if test="xiaohongshuId != null">xiaohongshu_id,</if>
+            <if test="wechat != null">wechat,</if>
+            <if test="orderEntryTime != null">order_entry_time,</if>
+            <if test="transactionStatus != null">transaction_status,</if>
+            <if test="transactionDate != null">transaction_date,</if>
+            <if test="transactionOrganization != null">transaction_organization,</if>
+            <if test="transactionProject != null">transaction_project,</if>
+            <if test="transactionAmount != null">transaction_amount,</if>
+            <if test="rebateRatio != null">rebate_ratio,</if>
+            <if test="rebateAmount != null">rebate_amount,</if>
+            <if test="balance != null">balance,</if>
+            <if test="paidAmount != null">paid_amount,</if>
+            <if test="toBePaidAmount != null">to_be_paid_amount,</if>
+            <if test="type != null">type,</if>
+            <if test="customerServiceAccountId != null">customer_service_account_id,</if>
+            <if test="channelSource != null">channel_source,</if>
+            <if test="promotionAccountId != null">promotion_account_id,</if>
+            <if test="salespersonAccountId != null">salesperson_account_id,</if>
+            <if test="recorderAccountId != null">recorder_account_id,</if>
+            <if test="customerId != null">customer_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="phoneNumber != null">#{phoneNumber},</if>
+            <if test="xiaohongshuId != null">#{xiaohongshuId},</if>
+            <if test="wechat != null">#{wechat},</if>
+            <if test="orderEntryTime != null">#{orderEntryTime},</if>
+            <if test="transactionStatus != null">#{transactionStatus},</if>
+            <if test="transactionDate != null">#{transactionDate},</if>
+            <if test="transactionOrganization != null">#{transactionOrganization},</if>
+            <if test="transactionProject != null">#{transactionProject},</if>
+            <if test="transactionAmount != null">#{transactionAmount},</if>
+            <if test="rebateRatio != null">#{rebateRatio},</if>
+            <if test="rebateAmount != null">#{rebateAmount},</if>
+            <if test="balance != null">#{balance},</if>
+            <if test="paidAmount != null">#{paidAmount},</if>
+            <if test="toBePaidAmount != null">#{toBePaidAmount},</if>
+            <if test="type != null">#{type},</if>
+            <if test="customerServiceAccountId != null">#{customerServiceAccountId},</if>
+            <if test="channelSource != null">#{channelSource},</if>
+            <if test="promotionAccountId != null">#{promotionAccountId},</if>
+            <if test="salespersonAccountId != null">#{salespersonAccountId},</if>
+            <if test="recorderAccountId != null">#{recorderAccountId},</if>
+            <if test="customerId != null">#{customerId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTransactionStatistics" parameterType="TransactionStatistics">
+        update transaction_statistics
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="phoneNumber != null">phone_number = #{phoneNumber},</if>
+            <if test="xiaohongshuId != null">xiaohongshu_id = #{xiaohongshuId},</if>
+            <if test="wechat != null">wechat = #{wechat},</if>
+            <if test="orderEntryTime != null">order_entry_time = #{orderEntryTime},</if>
+            <if test="transactionStatus != null">transaction_status = #{transactionStatus},</if>
+            <if test="transactionDate != null">transaction_date = #{transactionDate},</if>
+            <if test="transactionOrganization != null">transaction_organization = #{transactionOrganization},</if>
+            <if test="transactionProject != null">transaction_project = #{transactionProject},</if>
+            <if test="transactionAmount != null">transaction_amount = #{transactionAmount},</if>
+            <if test="rebateRatio != null">rebate_ratio = #{rebateRatio},</if>
+            <if test="rebateAmount != null">rebate_amount = #{rebateAmount},</if>
+            <if test="balance != null">balance = #{balance},</if>
+            <if test="paidAmount != null">paid_amount = #{paidAmount},</if>
+            <if test="toBePaidAmount != null">to_be_paid_amount = #{toBePaidAmount},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="customerServiceAccountId != null">customer_service_account_id = #{customerServiceAccountId},</if>
+            <if test="channelSource != null">channel_source = #{channelSource},</if>
+            <if test="promotionAccountId != null">promotion_account_id = #{promotionAccountId},</if>
+            <if test="salespersonAccountId != null">salesperson_account_id = #{salespersonAccountId},</if>
+            <if test="recorderAccountId != null">recorder_account_id = #{recorderAccountId},</if>
+            <if test="customerId != null">customer_id = #{customerId},</if>
+        </trim>
+        where statistics_id = #{statisticsId}
+    </update>
+
+    <delete id="deleteTransactionStatisticsByStatisticsId" parameterType="Long">
+        delete from transaction_statistics where statistics_id = #{statisticsId}
+    </delete>
+
+    <delete id="deleteTransactionStatisticsByStatisticsIds" parameterType="String">
+        delete from transaction_statistics where statistics_id in 
+        <foreach item="statisticsId" collection="array" open="(" separator="," close=")">
+            #{statisticsId}
+        </foreach>
+    </delete>
+</mapper>
